@@ -1,5 +1,8 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -30,12 +33,16 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{home}">Home <span class="sr-only">(current)</span></a>
+             <li class="nav-item active">
+                <a class="nav-link" href="/home" class="btn btn-success">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a th:href="@{registerPage}" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Register
+                <a href="/registerPage" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Register
                     Team</a>
+            </li>
+            <li class="nav-item">
+                <a href="/feedBack" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Feedback
+                    Form</a>
             </li>
 
         </ul>
@@ -47,27 +54,50 @@
 <!-- End Nav Bar-->
 <form>
     <div class="form-group">
-        <label>Team Name</label><input type="text" class="form-control" id="teamName" aria-describedby="teamName">
-    </div>
-    <div class="form-group">
-        <label>Team Manager's Name</label><input type="text" class="form-control" id="teamManagerName"
-                                                 aria-describedby="teamManagerName">
-    </div>
-    <div class="form-group">
-        <label>Project ID</label>
-        <select name="projectId" id="projectId">
+        <label>Choose Questions: </label>
+        <select name="projectId" id="id">
             <option value="none" selected disabled hidden>
                 Select an Option
             </option>
-            <option value="119056879">119056879</option>
-            <option value="119056878">119056878</option>
-            <option value="119056877">119056877</option>
-            <option value="119056876">119056876</option>
         </select>
     </div>
+    <div class="form-group">
+    <label>Provide your ratings: </label>
+		    <label class="radio-inline">
+		      <input type="radio" value="1"> 1
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" value="2"> 2
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" value="3"> 3
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" value="4"> 4
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" value="5"> 5
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" value="6"> 6
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" value="7"> 7
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" value="8"> 8
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" value="9"> 10
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" value="10"> 10
+		    </label>
+    </div>
 
-    <div id="addLine" class="form-group">
-        <button onclick="addInputLine()" name="addInputLine" class="btn btn-primary">Add Member<span class="fa fa-plus"/></button>
+    <div class="form-group">
+       <label>FeedBack :</label><input type="text" class="form-control" id="feedback"
+                                                 aria-describedby="feedback">
     </div>
     <script>
     function addInputLine() {
