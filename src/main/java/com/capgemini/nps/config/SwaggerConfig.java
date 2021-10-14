@@ -29,7 +29,7 @@ public class SwaggerConfig {
 				.apiInfo(apiInfo())
 				.select()
 				.paths(PathSelectors.any())
-				.apis(RequestHandlerSelectors.basePackage("com.aegon.survey.demo"))
+				.apis(RequestHandlerSelectors.basePackage("com.capgemini.nps"))
 				.build().pathMapping("/")
 				.useDefaultResponseMessages(false)
 				.directModelSubstitute(LocalDate.class, String.class)
