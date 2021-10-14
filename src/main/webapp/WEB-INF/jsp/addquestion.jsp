@@ -2,8 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+ <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -21,6 +20,76 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
+    	#questions {
+		  font-family: Arial, Helvetica, sans-serif;
+		  border-collapse: collapse;
+		  width: 70%;
+		}
+		
+		#questions td, #questions th {
+		  border: 1px solid #ddd;
+		  padding: 8px;
+		}
+		
+		#questions tr:nth-child(even){background-color: #f2f2f2;}
+		
+		#questions tr:hover {background-color: #ddd;}
+		
+		#questions th {
+		  padding-top: 12px;
+		  padding-bottom: 6px;
+		  text-align: left;
+		  background-color: #04AA6D;
+		  color: white;
+		}
+		.button1 {
+		  background-color: #4CAF50;
+		  border-radius: 13px;
+		  border: none;
+		  color: white;
+		  padding: 10px 10px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  font-size: 13px;
+		  margin: 4px 2px;
+		  transition-duration: 0.4s;
+		  cursor: pointer;
+		}
+		.editbutton {
+		  background-color: white; 
+		  color: black; 
+		  border: 2px solid #4CAF50;
+		}
+		
+		.editbutton:hover {
+		  background-color: #4CAF50;
+		  color: white;
+		}
+		.deletebutton {
+		  background-color: white; 
+		  color: black; 
+		  border: 2px solid #f44336;
+		}
+		
+		.deletebutton:hover {
+		  background-color: #f44336;
+		  color: white;
+		}
+		input[type=text] {
+		  width: 60%;
+		  padding: 9px 13px;
+		  margin: 8px 0;
+		  box-sizing: border-box;
+		  border: 3px solid #ccc;
+		  -webkit-transition: 0.5s;
+		  transition: 0.5s;
+		  outline: none;
+		}
+		
+		input[type=text]:focus {
+		  border: 3px solid #555;
+		}
     </style>
 </head>
 <body>
@@ -34,7 +103,7 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+             <li class="nav-item active">
                 <a class="nav-link" href="/home" class="btn btn-success">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
@@ -42,7 +111,7 @@
                     Team</a>
             </li>
             <li class="nav-item">
-                <a href="/questionpage" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Add Questions</a>
+                <a href="/registerPage" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Add Questions</a>
             </li>
             <li class="nav-item">
                 <a href="/feedBack" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Feedback
@@ -56,7 +125,30 @@
     </div>
 </nav>
 <!-- End Nav Bar-->
-<h4 align="center">Welcome to NPS</h4>
+<form>
+    <div class="form-group">
+    <label>&nbsp Previously added questions </label>
+	<table id="questions" >
+	  <tr>
+	    <th>Questions</th>
+	    <th>Action</th>
+	  </tr>
+	  <tr>
+	    <td>What is your birth place?</td>
+	    <td>
+	    <button class="button1 editbutton">Edit</button> &nbsp 
+	    <button class="button1 deletebutton">Delete</button>
+	    </td>
+	  </tr> 
+	 </table>
+    </div>
+	<br/>
+   <label>&nbsp Want to add a new Question? Please type in...</label>
+   <br/>
+   &nbsp<input type="text" id="newquestion" name="newquestion">
+   <button class="btn btn-primary">Add Question</button>
+   
+</form>
 <!-- Optional JavaScript; choose one of the two! -->
 
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
