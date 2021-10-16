@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
@@ -9,6 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+	<script src="${pageContext.request.contextPath}/core/jquery.1.10.2.min.js"></script> 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -21,7 +23,50 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
+    .error-message {
+    font-size: 90%;
+    color: #FFCC5F;
+    font-style: italic;
+    font-weight: bold;
+    }
     </style>
+    <script>
+    //var $x = jQuery.noConflict();
+  jQuery(document).ready(function(){
+    var $container = $('.container');
+    var $row = $('.row');
+    var $add = $('#addButton');
+    var $remove = $('#removeButton');
+    var $focused;
+
+    $container.on('click', 'input', function () {
+        $focused = $(this);
+    });
+
+    $add.on('click', function () {
+        var $newRow = $row.clone().insertAfter('.row:last');
+        $newRow.find('input').each(function () {
+            this.value = '';
+        });
+    });
+
+    $remove.on('click', function () {
+        if (!$focused) {
+            alert('Select a row to delete (click en input with it)');
+            return;
+        }
+        
+        var $currentRow = $focused.closest('.row');
+    	if ($currentRow.index() === 0) {
+            // don't remove first row
+            alert("You can't remove first row");
+        } else {
+        	$currentRow.remove();
+            $focused=null;
+        }
+    });
+  });
+    </script>
 </head>
 <body>
 <!--Nav Bar -->
@@ -56,30 +101,67 @@
     </div>
 </nav>
 <!-- End Nav Bar-->
-<form>
+<c:if test="${not empty message }">
+     <div class="error-message">
+         ${message}
+     </div>
+   </c:if>
+<form:form method="POST" modelAttribute="team" action="/addTeam" name="team" enctype="multipart/form-data">
     <div class="form-group">
-        <label>Team Name</label><input type="text" class="form-control" id="teamName" aria-describedby="teamName">
-    </div>
-    <div class="form-group">
-        <label>Team Manager's Name</label><input type="text" class="form-control" id="teamManagerName"
-                                                 aria-describedby="teamManagerName">
-    </div>
-    <div class="form-group">
-        <label>Project ID</label>
-        <select name="projectId" id="projectId">
-            <option value="none" selected disabled hidden>
-                Select an Option
-            </option>
-            <option value="119056879">119056879</option>
-            <option value="119056878">119056878</option>
-            <option value="119056877">119056877</option>
-            <option value="119056876">119056876</option>
-        </select>
-    </div>
+    <table id ="title">
+        
+        <tr>
+        <td>Team Name</td>
+        <td><form:input type="text" class="form-control" path="tname" aria-describedby="teamName"/></td>
+        </tr>
+        <tr>
+         <td>Team Manager's Name</td>
+        <td><form:input type="text" class="form-control" path="tmanagername"
+                                                 aria-describedby="teamManagerName"/></td>
+        </tr>
+         <tr>
+         <td>Project ID</td>
+        <td><form:select path="tprojectid">
+            <form:option value="none" label="Select an Option"/>
+            <form:option value="119056879" label="119056879" />
+            <form:option value="119056878"  label="119056878" />
+            <form:option value="119056877"  label="119056877" />
+            <form:option value="119056876"  label="119056876" />
+        </form:select></td>
+        </tr>
+      
 
-    <div id="addLine" class="form-group">
+    <!-- <div id="addLine" class="form-group">
         <button onclick="addInputLine()" name="addInputLine" class="btn btn-primary">Add Member<span class="fa fa-plus"/></button>
-    </div>
+    </div> -->
+    
+   <tr>
+   <td>
+   <div class="text-right">
+    <input type="button" style="float: left;margin-right: 16px;" class="btn btn-primary" value='+' id='addButton'/>
+    <input type='button' style="float: left;" class="btn btn-primary" value='-' id='removeButton'>
+   </div>
+   </td>
+   <td>
+	<div class="container">
+		    <div class="row">
+		        <div class="col-lg-3" style="padding-left: 0px;padding-right: 0px;">
+		            <div class="form-group">
+		                <form:input type="text" size="70" class="form-control" path="tmembername" name="size[]" placeholder="Member Name" />
+		            </div>
+		        </div>
+		        <!-- <div class="col-lg-3">
+		            <div class="form-group">
+		                <input type="text" class="form-control" name="clr[]" placeholder="Color" />
+		            </div>
+		        </div> -->
+		        <hr/>
+		    </div>
+	</div>
+	</td>
+	</tr>
+</table>
+</div>
     <script>
     function addInputLine() {
     var node = document.createElement("input");                 // Create an <input> node
@@ -90,7 +172,7 @@
 
 
     <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</form:form>
 <!-- Optional JavaScript; choose one of the two! -->
 
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->

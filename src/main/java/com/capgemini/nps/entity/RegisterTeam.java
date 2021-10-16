@@ -5,20 +5,22 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class Answer extends AbstractEntity {
-
-	private int score;
-	private String feedback;
-
-	@ManyToOne(targetEntity = Survey.class)
-	private Survey survey;
+public class RegisterTeam  extends AbstractEntity{
 	
+	private String tname;
+	private String tmanagername;
+	private String tprojectid;
+	private String tmembername;
+	
+
 }

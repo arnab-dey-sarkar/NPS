@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.capgemini.nps.entity.RegisterTeam;
+
 @Controller
 public class NpsController {
     @GetMapping({"/","/home"})
@@ -13,8 +15,8 @@ public class NpsController {
     }
    
     @GetMapping("/registerPage")
-    public String getRegisterPage() {
-
+    public String getRegisterPage(Model model) {   
+    	model.addAttribute("team",new RegisterTeam());
         return "register";
     }
     @GetMapping("/feedBack")
