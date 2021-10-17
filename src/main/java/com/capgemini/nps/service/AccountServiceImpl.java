@@ -1,21 +1,21 @@
 package com.capgemini.nps.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.capgemini.nps.entity.Account;
 import com.capgemini.nps.entity.RegisterTeam;
+import com.capgemini.nps.repository.AccountRepository;
 import com.capgemini.nps.repository.TRegisterRepository;
 
 @Service
-public class TServiceImpl implements TService {
+public class AccountServiceImpl implements AccountService {
 
-	private final TRegisterRepository tRegisterRepository;
+	private final AccountRepository accountRepository;
 
-	public TServiceImpl(TRegisterRepository tRegisterRepository) {
-		this.tRegisterRepository = tRegisterRepository;
+	public AccountServiceImpl(AccountRepository accountRepository) {
+		this.accountRepository = accountRepository;
 	}
 
 	/*
@@ -28,15 +28,9 @@ public class TServiceImpl implements TService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public RegisterTeam saveTeam(RegisterTeam registerTeam) {
+	public Account findAccount(String userName) {
 		
-		return tRegisterRepository.save(registerTeam);
-	}
-	
-	@Override
-	 @Transactional(propagation = Propagation.SUPPORTS)
-	public List<RegisterTeam> getTeam() {
-		return tRegisterRepository.findAll(); 
+		return accountRepository.findAllByUsername(userName);
 	}
 
 	/*

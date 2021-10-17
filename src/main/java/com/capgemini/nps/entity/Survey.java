@@ -15,7 +15,9 @@ import javax.persistence.Enumerated;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Survey extends AbstractEntity {
-
+	
+	private String clientId;
+	private String teamId;
 	private String topic;
 
 	@Enumerated(EnumType.STRING)
@@ -27,4 +29,6 @@ public class Survey extends AbstractEntity {
 	public void setNpmScore(int npmScore) {
 		return;
 	}
+	
+	private String status;
 }

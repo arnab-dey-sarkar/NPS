@@ -8,7 +8,7 @@ public interface AnswerService {
 
 	Answer saveAnswer(Answer answer);
 
-	List<Answer> getAnswersByTopic(Long topicId);
+	/* List<Answer> getAnswersByTopic(Long topicId); */
 
 	List<Answer> getAnswers();
 }

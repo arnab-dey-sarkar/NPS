@@ -163,7 +163,7 @@
     			    //var result = JSON.parse(result);
     				var s = '<option value="-1">Please Select a Team</option>';
     				for(var i = 0; i < result.length; i++) {
-    					s += '<option value="' + result[i].id + '">' + result[i].tname + '</option>';
+    					s += '<option value="' + result[i].tname + '">' + result[i].tname + '</option>';
     				}
     				//console.log('------------s', s);
     				$('#teamid').html(s);
@@ -176,7 +176,7 @@
     	//); 
     	
     	}); 
-    
+ 
     </script>
 </head>
 <body>
@@ -220,141 +220,22 @@
          ${message}
      </div>
    </c:if>
-
-<div class="form-group">
- <table id ="title">
-    <tr>
-    <th><h5>Thanks for your feedback!</h5>
-	  <h6>Just some Questions for you</h6></th>
-    </tr>
-    </table>
-    </br>
-<!-- <input type="hidden" id="Counter" name="Counter" value="0"> -->
-
-<c:forEach items="${questions}" var="question" varStatus="counter"> 
-<form:form method="POST" modelAttribute="answer" action="/addAnswer" name="answer" enctype="multipart/form-data">
-  <table id="questions">
-  <form:hidden path = "tname" value = "${tname}" />
-   <tr>
-	  <td>Questions:</td>
-	  <td>
-	  
-	  <form:hidden path = "topic" value = "${question.topic}" />${question.topic}
-	  </td>
-	  </tr>
-	  <tr>
-	  <td>Provide your ratings: </td>
-	  <td><label class="detractorsbutton">
-		      <form:radiobutton path= "score" value ="1"/> 1
-		    </label>
-		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="2"/> 2
-		    </label>
-		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="3"/> 3
-		    </label>
-		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="4"/> 4
-		    </label>
-		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="5"/> 5
-		    </label>
-		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="6"/> 6
-		    </label>
-		    <label class="passivebutton">
-		      <form:radiobutton path= "score" value="7"/> 7
-		    </label>
-		    <label class="passivebutton">
-		      <form:radiobutton path= "score" value="8"/> 8
-		    </label>
-		    <label class="promotersbutton">
-		      <form:radiobutton path= "score" value="9"/> 9
-		    </label>
-		    <label class="promotersbutton">
-		      <form:radiobutton path= "score" value="10"/> 10
-		    </label></td>
-	  </tr>
-	</table>
-
-   <label>We are glad to hear some feed back from you :</label><form:input type="text" class="form-control" id="feedback" path = "feedback"
-                                                 aria-describedby="feedback"/> 
+<form:form method="GET" modelAttribute="getfeedback" action="/getFeedback" name="answer" enctype="multipart/form-data">
+  
+ <div class="form-group">
     
-  <button type="submit" name = "Continue" class="btn btn-primary">Continue</button>
-</form:form> 
-</c:forEach>
-</div> 
-   
- <%-- <div class="form-group">
-    <table id ="title">
-    <tr>
-    <th><h5>Thanks for your feedback!</h5>
-	  <h6>Just some Questions for you</h6></th>
-    </tr>
-    </table>
-    </br>
     <table id="questions">
 	 
 	  <tr>
 	  <td>Choose Teams:</td>
-	  <td><form:select id="teamid" path = "tname" style="width:200px"></form:select></td>
+	  <td><form:select id="teamid" path = "teamId" style="width:200px"></form:select></td>
+	  <td><button type="submit" class="btn btn-primary">Go</button></td>
 	  </tr>
-	  <tr>
-	  <td>Choose Questions:</td>
-	  <td><form:select id="id" path = "topic" style="width:200px"></form:select></td>
-	  </tr>
-	  <tr>
-	  <td>Provide your ratings: </td>
-	  <td><label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="1"/> 1
-		    </label>
-		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="2"/> 2
-		    </label>
-		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="3"/> 3
-		    </label>
-		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="4"/> 4
-		    </label>
-		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="5"/> 5
-		    </label>
-		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="6"/> 6
-		    </label>
-		    <label class="passivebutton">
-		      <form:radiobutton path= "score" value="7"/> 7
-		    </label>
-		    <label class="passivebutton">
-		      <form:radiobutton path= "score" value="8"/> 8
-		    </label>
-		    <label class="promotersbutton">
-		      <form:radiobutton path= "score" value="9"/> 9
-		    </label>
-		    <label class="promotersbutton">
-		      <form:radiobutton path= "score" value="10"/> 10
-		    </label></td>
-	  </tr>
-	</table>
-    </div>
-    <div class="form-group">
-       <label>We are glad to hear some feed back from you :</label><form:input type="text" class="form-control" id="feedback" path = "feedback"
-                                                 aria-describedby="feedback"/>
-    </div>
+	  </table>
+  </div>
+
     
-   
-    <script>
-    function addInputLine() {
-    var node = document.createElement("input");                 // Create an <input> node
-    document.getElementById("addLine").appendChild(node);     // Append it to the parent
-    }
-    </script>
-
---%>
-
-   <!--  <button type="submit" class="btn btn-primary">Submit</button> -->
-
+</form:form>
 <!-- Optional JavaScript; choose one of the two! -->
 
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->

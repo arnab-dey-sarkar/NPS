@@ -12,6 +12,8 @@ public interface TService {
 	//Boolean isSurveyAlreadyExist(String topic);
 
 	RegisterTeam saveTeam(RegisterTeam rteam);
+	
+	List<RegisterTeam> getTeam();
 
 	//List<Survey> getSurveys();
 

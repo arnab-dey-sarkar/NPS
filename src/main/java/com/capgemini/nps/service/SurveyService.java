@@ -15,4 +15,6 @@ public interface SurveyService {
 	List<Survey> getSurveys();
 
 	ResponseEntity<Survey> getSurveyById(Long topicId);
+
+	List<Survey> findAllQuestions(String tname);
 }

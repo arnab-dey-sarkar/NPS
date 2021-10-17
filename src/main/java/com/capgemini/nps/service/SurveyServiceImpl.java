@@ -50,4 +50,12 @@ public class SurveyServiceImpl implements SurveyService {
 				.orElseThrow(() -> new ResourceNotFoundException("Survey not exist with id: " + id));
 		return ResponseEntity.ok(survey);
 	}
+	
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<Survey> findAllQuestions(String tname) {
+		return surveyRepository.findAllQuestions(tname);
+	}
+	
+	
 }
