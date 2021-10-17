@@ -1,14 +1,9 @@
-<!-- page: addquestion.jsp -->
+<!-- page: savequestion.jsp -->
 <!DOCTYPE html>
-<%@page import="com.capgemini.nps.entity.Question"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
  <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<% 
-	List<Question> questionList = (List<Question>)request.getAttribute("questionList"); 
-%>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -131,29 +126,12 @@
     </div>
 </nav>
 <!-- End Nav Bar-->
-<form>
-    <div class="form-group">
-    <label>&nbsp Previously added questions </label>
-	<table id="questions" >
-	  <tr>
-	    <th>Questions</th>
-	    <th>Action</th>
-	  </tr>
-	  <% if(null!= questionList && !questionList.isEmpty()) { %>
-	  <% for(Question question: questionList){ %>
-		  <tr>
-		    <td><%= question.getDescription() %></td>
-		    <td>
-		    <button class="button1 editbutton">Edit</button> &nbsp 
-		    <button class="button1 deletebutton">Delete</button>
-		    </td>
-		  </tr> 
-	  <% } }%>
-	 </table>
-    </div>
+<form action = "/savequestion" method="post">
 	<br/>
-   <label>&nbsp Want to add a new Question? <a href="savequestionpage">Click Here...</a></label>
+   <label>&nbsp Please type below...</label>
    <br/>
+   &nbsp<input type="text" id="newquestion" name="newquestion">
+   <button class="btn btn-primary" type="submit">Save</button>
    
 </form>
 <!-- Optional JavaScript; choose one of the two! -->
