@@ -1,6 +1,7 @@
 package com.capgemini.nps.service;
 
 import com.capgemini.nps.entity.Answer;
+import com.capgemini.nps.entity.NPSScore;
 import com.capgemini.nps.entity.Survey;
 import com.capgemini.nps.repository.AnswerRepository;
 import com.capgemini.nps.repository.SurveyRepository;
@@ -47,6 +48,62 @@ public class AnswerServiceImpl implements AnswerService {
 		//survey.setStatus("Completed");
 		surveyRepository.save(survey);
 		return answerRepository.save(answer);
+	}
+	
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public NPSScore calNPSScore(String teamId) {
+		/*
+		 * Survey survey = answer.getSurvey(); if (survey == null || survey.getId() ==
+		 * null || survey.getId() == 0) { throw new
+		 * RuntimeException("Answer has no assign by any Survey Topic!"); } else if
+		 * (answer.getScore() < 0 || answer.getScore() > 10) { throw new
+		 * RuntimeException("Score is invalid!"); }
+		 * 
+		 * survey = surveyRepository.getOne(survey.getId());
+		 * 
+		 * List<Answer> answers = answerRepository.findAllBySurveyId(survey.getId());
+		 * answers.add(answer); int answerCount = answers.size(); if (answerCount != 0)
+		 * { int promoterCount = 0; int detractorCount = 0; for (Answer anAnswer :
+		 * answers) { if (anAnswer.getScore() >= 9) { promoterCount++; } else if
+		 * (anAnswer.getScore() <= 6) { detractorCount++; } } int npmScore = (int) (100
+		 * * ((float) (promoterCount - detractorCount) / answerCount));
+		 * survey.setNpmScore(npmScore); surveyRepository.save(survey); }
+		 */
+		
+		List<Answer> answers = answerRepository.findAllByTeamId(teamId);
+		 int answerCount = answers.size(); 
+		 if (answerCount != 0)
+		  { 
+			 int promoterCount = 0; int detractorCount = 0; int passiveCount=0; 
+		  for (Answer anAnswer : answers) 
+		  { 
+			  if (anAnswer.getScore() >= 9)  {
+				  promoterCount++;
+				  } 
+			  
+			  else if (anAnswer.getScore() <= 6)  { 
+				  detractorCount++; 
+			  } 
+			  else if (anAnswer.getScore() > 6 && anAnswer.getScore() < 9)  { 
+				  passiveCount++; 
+			  } 
+		  }
+		  int npmScore = (int) (100 * ((float) (promoterCount - detractorCount) / answerCount));
+		  NPSScore npsScore = new NPSScore();
+		  npsScore.setNps_score(npmScore);
+		  npsScore.setDetractor_count(detractorCount);
+		  npsScore.setPromoter_count(promoterCount);
+		  npsScore.setPassive_count(passiveCount);
+		  
+		  npsScore.setPromoter_pcnt((int) (100 * ((float) (promoterCount) / answerCount)));
+		  npsScore.setPassive_pcnt((int) (100 * ((float) (passiveCount) / answerCount)));
+		  npsScore.setDetractor_pcnt((int)(100 * ((float) (detractorCount) / answerCount)));
+		  return npsScore;
+		  } 
+		  
+		 return null;
 	}
 
 	/*

@@ -16,19 +16,19 @@ import javax.persistence.Enumerated;
 @EqualsAndHashCode(callSuper = true)
 public class Survey extends AbstractEntity {
 	
-	private String clientId;
+	/* private String clientId; */
 	private String teamId;
 	private String topic;
 
-	@Enumerated(EnumType.STRING)
-	private QuestionType type;
+	/*
+	 * @Enumerated(EnumType.STRING) private QuestionType type;
+	 */
 
-	private int npmScore;
-
-	// TODO düzenlenecek.
-	public void setNpmScore(int npmScore) {
-		return;
-	}
+	/*
+	 * private int npmScore;
+	 * 
+	 * // TODO düzenlenecek. public void setNpmScore(int npmScore) { return; }
+	 */
 	
-	private String status;
+	/* private String status; */
 }

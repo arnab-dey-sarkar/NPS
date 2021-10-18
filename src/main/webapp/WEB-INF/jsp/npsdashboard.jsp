@@ -21,6 +21,8 @@
     <%-- <script src="${pageContext.request.contextPath}/core/jquery.1.10.2.min.js"></script>
     <script src="${pageContext.request.contextPath}/core/jquery.autocomplete.min.js"></script> --%>
     <%-- <script src="${pageContext.request.contextPath}/core/jquery-1.7.1.min.js"></script> --%>
+   <script src = "https://code.highcharts.com/highcharts.js"></script>    
+      <script src = "https://code.highcharts.com/highcharts-more.js"></script>
     
     <style>
     body
@@ -163,7 +165,7 @@
     			    //var result = JSON.parse(result);
     				var s = '<option value="-1">Please Select a Team</option>';
     				for(var i = 0; i < result.length; i++) {
-    					s += '<option value="' + result[i].tname + '">' + result[i].tname + '</option>';
+    					s += '<option value="' + result[i].id + '">' + result[i].tname + '</option>';
     				}
     				//console.log('------------s', s);
     				$('#teamid').html(s);
@@ -176,13 +178,144 @@
     	//); 
     	
     	}); 
-    function onLoad(){
-    	
-        if ('<c:out value="${pageContext.request.userPrincipal.name}"/>' == '')
-        {
-        	window.location.href="home";
-        }
+<%-- function onLoad(){
+	var teamId="<%=session.getAttribute("teamId")%>";
+	    if ('<c:out value="${pageContext.request.userPrincipal.name}"/>' == '' && teamId == '')
+	    {
+	    	window.location.href="login";
+	    }
+} --%>
+
+$(document).ready(function() { 
+	var nps = $('#nScore').text() ;
+    var chart = {      
+       type: 'gauge',
+       plotBackgroundColor: null,
+       plotBackgroundImage: null,
+       plotBorderWidth: 0,
+       plotShadow: false
+    };
+    var title = {
+       text: 'NPS-meter'   
+    };     
+    var pane = {
+       startAngle: -150,
+       endAngle: 150,
+       background: [
+          {
+             backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                   [0, '#FFF'],
+                   [1, '#333']
+                ]
+             },
+             borderWidth: 0,
+             outerRadius: '109%'
+          }, 
+          {
+             backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                   [0, '#333'],
+                   [1, '#FFF']
+                ]
+             },
+             borderWidth: 1,
+             outerRadius: '107%'
+          }, 
+          {
+             // default background
+          }, 
+          {
+             backgroundColor: '#DDD',
+             borderWidth: 0,
+             outerRadius: '105%',
+             innerRadius: '103%'
+          }
+       ]
+    };
+    
+    // the value axis
+    var yAxis = {
+       min: 0,
+       max: 100,
+
+       /* minorTickInterval: 'auto', */
+       minorTickWidth: 1,
+       minorTickLength: 10,
+       minorTickPosition: 'inside',
+       minorTickColor: '#666',
+
+       tickPixelInterval: 30,
+       tickWidth: 2,
+       tickPosition: 'inside',
+       tickLength: 10,
+       tickColor: '#666',
+       
+       labels: {
+          step: 2,
+          /* rotation: 'auto' */
+       },
+       title: {
+          text: '%'
+       },
+       plotBands: [
+          {
+             from: 90,
+             to: 100,
+             color: '#55BF3B' // green
+          }, 
+          {
+             from: 70,
+             to: 90,
+             color: '#DDDF0D' // yellow
+          }, 
+          {
+             from: 0,
+             to: 70,
+             color: '#DF5353' // red
+          }
+       ]
+    };
+    var series = [{
+       name: 'Speed',
+       data: [Math.round(nps)],
+       tooltip: {
+          valueSuffix: ' km/h'
+       }
+    }];     
+    var json = {};   
+    json.chart = chart; 
+    json.title = title;       
+    json.pane = pane; 
+    json.yAxis = yAxis; 
+    json.series = series;     
+    
+    // Add some life
+    var chartFunction = function (chart) {
+       if (!chart.renderer.forExport) {
+          setInterval(function () {
+             var point = chart.series[0].points[0], newVal,
+                inc = Math.round((Math.random() - 0.5) * 20);
+             newVal = point.y + inc;
+             
+             if (newVal < 0 || newVal > 200) {
+                newVal = point.y - inc;
+             }
+             point.update(Math.round(nps));
+          }, 3000);
+       }
+    };
+    $('#container').highcharts(json,chartFunction);
+ });
+function onLoad(){
+	
+    if ('<c:out value="${pageContext.request.userPrincipal.name}"/>' == '')
+    {
+    	window.location.href="home";
     }
+}
     </script>
 </head>
 <body onload="onLoad()">
@@ -230,22 +363,109 @@
          ${message}
      </div>
    </c:if>
-<form:form method="GET" modelAttribute="getfeedback" action="/getFeedback" name="answer" enctype="multipart/form-data">
+
+<form:form method="GET" modelAttribute="npsScore" action="/npsScoreCalculate" name="nps" enctype="multipart/form-data">
   
  <div class="form-group">
+     <table id ="title">
+    <tr>
+    <th><h5>Calculated NPS Score for Team : ${tname}</h5></th>
+    </tr>
+    </table>
     
+    <div id = "container" style = "float: left;width: 550px; height: 400px; margin: 0 auto"></div>
     <table id="questions">
 	 
 	  <tr>
-	  <td>Choose Teams:</td>
-	  <td><form:select id="teamid" path = "teamId" style="width:200px"></form:select></td>
-	  <td><button type="submit" class="btn btn-primary">Go</button></td>
+	  <th><h6>DETRACTORS(0-6)</h6></th>
+	  <th><h6>PASSIVES(7-8)</h6></th>
+	  <th><h6>PROMOTERS(9-10)</h6></th>
+	  <th><h6>NET PROMOTER SCORE</h6></th>
 	  </tr>
+	  <tr>
+	  <td>${npsScore.detractor_pcnt}%</br>${npsScore.detractor_count}</td>
+	  <td>${npsScore.passive_pcnt}%</br>${npsScore.passive_count}</td>
+	  <td>${npsScore.promoter_pcnt}%</br>${npsScore.promoter_count}</td>
+	  <td id = "nScore">${npsScore.nps_score}</td>
+	  </tr>
+	  
+	  
 	  </table>
   </div>
 
     
 </form:form>
+   
+ <%-- <div class="form-group">
+    <table id ="title">
+    <tr>
+    <th><h5>Thanks for your feedback!</h5>
+	  <h6>Just some Questions for you</h6></th>
+    </tr>
+    </table>
+    </br>
+    <table id="questions">
+	 
+	  <tr>
+	  <td>Choose Teams:</td>
+	  <td><form:select id="teamid" path = "tname" style="width:200px"></form:select></td>
+	  </tr>
+	  <tr>
+	  <td>Choose Questions:</td>
+	  <td><form:select id="id" path = "topic" style="width:200px"></form:select></td>
+	  </tr>
+	  <tr>
+	  <td>Provide your ratings: </td>
+	  <td><label class="detractorsbutton">
+		      <form:radiobutton path= "score" value="1"/> 1
+		    </label>
+		    <label class="detractorsbutton">
+		      <form:radiobutton path= "score" value="2"/> 2
+		    </label>
+		    <label class="detractorsbutton">
+		      <form:radiobutton path= "score" value="3"/> 3
+		    </label>
+		    <label class="detractorsbutton">
+		      <form:radiobutton path= "score" value="4"/> 4
+		    </label>
+		    <label class="detractorsbutton">
+		      <form:radiobutton path= "score" value="5"/> 5
+		    </label>
+		    <label class="detractorsbutton">
+		      <form:radiobutton path= "score" value="6"/> 6
+		    </label>
+		    <label class="passivebutton">
+		      <form:radiobutton path= "score" value="7"/> 7
+		    </label>
+		    <label class="passivebutton">
+		      <form:radiobutton path= "score" value="8"/> 8
+		    </label>
+		    <label class="promotersbutton">
+		      <form:radiobutton path= "score" value="9"/> 9
+		    </label>
+		    <label class="promotersbutton">
+		      <form:radiobutton path= "score" value="10"/> 10
+		    </label></td>
+	  </tr>
+	</table>
+    </div>
+    <div class="form-group">
+       <label>We are glad to hear some feed back from you :</label><form:input type="text" class="form-control" id="feedback" path = "feedback"
+                                                 aria-describedby="feedback"/>
+    </div>
+    
+   
+    <script>
+    function addInputLine() {
+    var node = document.createElement("input");                 // Create an <input> node
+    document.getElementById("addLine").appendChild(node);     // Append it to the parent
+    }
+    </script>
+
+--%>
+
+   <!--  <button type="submit" class="btn btn-primary">Submit</button> -->
+
 <!-- Optional JavaScript; choose one of the two! -->
 
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->

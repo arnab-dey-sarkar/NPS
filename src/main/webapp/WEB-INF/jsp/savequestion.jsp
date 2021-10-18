@@ -96,8 +96,18 @@
 		  border: 3px solid #555;
 		}
     </style>
+    
+ <script>
+ function onLoad(){
+		
+	    if ('<c:out value="${pageContext.request.userPrincipal.name}"/>' == '')
+	    {
+	    	window.location.href="home";
+	    }
+	}
+ </script>   
 </head>
-<body>
+<body onLoad="onLoad()">
 <!--Nav Bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">NPS</a>
@@ -122,10 +132,15 @@
                 <a href="/feedBack" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Feedback
                     Form</a>
             </li>
+            <li class="nav-item">
+                <a href="/calNpsScore" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;NPS Dashboard
+                    Form</a>
+            </li>
 
         </ul>
+        <p style="font-weight: bold;">Welcome ${pageContext.request.userPrincipal.name} !!</p>
         <form class="form-inline my-2 my-lg-0">
-            <a class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</a>
+            <a href="/home" class="btn btn-outline-success my-2 my-sm-0" type="submit">LogOut</a>
         </form>
     </div>
 </nav>

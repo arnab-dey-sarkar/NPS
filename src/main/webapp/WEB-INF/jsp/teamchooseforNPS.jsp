@@ -185,7 +185,7 @@
     }
     </script>
 </head>
-<body onload="onLoad()">
+<body onLoad="onLoad()">
    <%-- <div class="page-title">Welcome ${pageContext.request.userPrincipal.name} !!</div> --%>
 
 <!--Nav Bar -->
@@ -230,7 +230,7 @@
          ${message}
      </div>
    </c:if>
-<form:form method="GET" modelAttribute="getfeedback" action="/getFeedback" name="answer" enctype="multipart/form-data">
+<form:form method="GET" modelAttribute="team" action="/npsScoreCalculate" name="answer" enctype="multipart/form-data">
   
  <div class="form-group">
     

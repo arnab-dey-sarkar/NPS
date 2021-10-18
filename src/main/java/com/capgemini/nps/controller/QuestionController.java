@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,13 +14,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.capgemini.nps.entity.Question;
+import com.capgemini.nps.entity.Survey;
 import com.capgemini.nps.service.QuestionService;
+import com.capgemini.nps.service.SurveyService;
 
 @Controller
 public class QuestionController {
 	
 	@Autowired
 	QuestionService questionService;
+	
+	@Autowired
+	SurveyService surveyService;
 
 	@GetMapping("/questionpage")
     public String getQuestionPage(HttpServletRequest request, HttpServletResponse response) {
@@ -34,7 +40,7 @@ public class QuestionController {
     }
 	
 	@PostMapping("/savequestion")
-	public String saveQuestion(HttpServletRequest request, HttpServletResponse response) {
+	public String saveQuestion(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
 		String reqQuestion = request.getParameter("newquestion");
 		String reqQuestionId = request.getParameter("questionid");
 		if(null!=reqQuestion && !reqQuestion.isEmpty()) {
@@ -44,6 +50,13 @@ public class QuestionController {
 				question.setId(Long.valueOf(reqQuestionId));
 			}
 			questionService.addQuestion(question);
+			String teamId = session.getAttribute("teamId").toString();
+			System.out.println("Team Id in savequestion====="+teamId);
+			Survey survey = new Survey();
+			survey.setTeamId(teamId);
+			survey.setTopic(question.getDescription());
+			surveyService.saveSurvey(survey);
+			
 		}
 		List<Question> questionList = questionService.fetchAllQuestions();
 		//System.out.println(questionList);

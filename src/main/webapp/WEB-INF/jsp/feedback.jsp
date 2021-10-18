@@ -176,10 +176,16 @@
     	//); 
     	
     	}); 
-    
+    function onLoad(){
+    	
+        if ('<c:out value="${pageContext.request.userPrincipal.name}"/>' == '')
+        {
+        	window.location.href="home";
+        }
+    } 
     </script>
 </head>
-<body>
+<body onload="onLoad()">
    <%-- <div class="page-title">Welcome ${pageContext.request.userPrincipal.name} !!</div> --%>
 
 <!--Nav Bar -->
@@ -204,6 +210,10 @@
             </li>
             <li class="nav-item">
                 <a href="/feedBack" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Feedback
+                    Form</a>
+            </li>
+            <li class="nav-item">
+                <a href="/calNpsScore" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;NPS Dashboard
                     Form</a>
             </li>
 

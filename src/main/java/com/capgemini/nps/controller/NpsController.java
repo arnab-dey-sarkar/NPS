@@ -1,8 +1,12 @@
 package com.capgemini.nps.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capgemini.nps.entity.Answer;
 import com.capgemini.nps.entity.RegisterTeam;
@@ -27,6 +31,7 @@ public class NpsController {
         return "teamchoose";
     }
     
+    
 	/*
 	 * @GetMapping("/postteamchoose") public String postteamchoose() { return
 	 * "feedback"; }
@@ -37,5 +42,16 @@ public class NpsController {
         
         model.addAttribute("errorMessage", "Please enter valid credentials!!");
         return "login";
+    }
+    
+    @GetMapping("/signout")
+    public String logout(@RequestParam(name = "user") String user,HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        
+        if (session != null) {
+        	user=null;
+            session.invalidate();
+        }
+        return "login";  //Where you go after logout here.
     }
 }

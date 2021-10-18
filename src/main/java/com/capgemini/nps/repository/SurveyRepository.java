@@ -15,7 +15,7 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 	Boolean existsByTopic(String topic);
 	
 	@Query(
-	        value = "SELECT * FROM Survey c WHERE status is null",
+	        value = "SELECT * FROM Survey c",
 	        nativeQuery = true
 	    )
 	public List<Survey> findAll();
