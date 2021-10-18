@@ -1,9 +1,13 @@
 <!-- page: savequestion.jsp -->
 <!DOCTYPE html>
+<%@page import="com.capgemini.nps.entity.Question"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
  <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+ <%
+ 	Question question = (Question)request.getAttribute("question");
+ %>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -130,7 +134,12 @@
 	<br/>
    <label>&nbsp Please type below...</label>
    <br/>
-   &nbsp<input type="text" id="newquestion" name="newquestion">
+   <% if(null != question) { %>
+	   &nbsp<input type="text" id="newquestion" name="newquestion" value="<%=question.getDescription()%>">
+	   &nbsp<input type="hidden" name="questionid" value="<%=question.getId()%>"/>
+   <% } else { %>
+   		&nbsp<input type="text" id="newquestion" name="newquestion">
+   <% } %>
    <button class="btn btn-primary" type="submit">Save</button>
    
 </form>

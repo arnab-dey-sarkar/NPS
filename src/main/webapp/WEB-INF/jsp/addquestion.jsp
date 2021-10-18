@@ -97,6 +97,15 @@
 		  border: 3px solid #555;
 		}
     </style>
+    <script type="text/javascript">
+    function editQuestionFunction(id)
+    {
+    }
+    function deleteQuestionFunction(id)
+    {
+    	
+    }
+    </script>
 </head>
 <body>
 <!--Nav Bar -->
@@ -144,8 +153,8 @@
 		  <tr>
 		    <td><%= question.getDescription() %></td>
 		    <td>
-		    <button class="button1 editbutton">Edit</button> &nbsp 
-		    <button class="button1 deletebutton">Delete</button>
+		    <button class="button1 editbutton" type="button"><a href="updatequestion/<%=question.getId()%>">Edit</a></button> &nbsp 
+		    <button class="button1 deletebutton" type="button"><a href="deletequestion/<%=question.getId()%>">Delete</a></button>
 		    </td>
 		  </tr> 
 	  <% } }%>

@@ -2,6 +2,7 @@ package com.capgemini.nps.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,16 @@ public class QuestionServiceImpl implements QuestionService {
 		List<Question> questionList = new ArrayList<>();
 		questionRepo.findAll().forEach(question -> questionList.add(question));
 		return questionList;
+	}
+
+	@Override
+	public Optional<Question> fetchQuestionById(Long id) {
+		return questionRepo.findById(id);
+	}
+
+	@Override
+	public void deleteQuestion(Long id) {
+		questionRepo.deleteById(id);
 	}
 
 }
