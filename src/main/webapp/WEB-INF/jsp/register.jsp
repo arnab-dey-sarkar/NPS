@@ -109,7 +109,7 @@
         </ul>
         <p style="font-weight: bold;">Welcome ${pageContext.request.userPrincipal.name} !!</p>
         <form class="form-inline my-2 my-lg-0">
-            <a href="/signout?user=${pageContext.request.userPrincipal.name}" class="btn btn-outline-success my-2 my-sm-0" type="submit">LogOut1</a>
+            <a href="/signout?user=${pageContext.request.userPrincipal.name}" class="btn btn-outline-success my-2 my-sm-0" type="submit">LogOut</a>
         </form>
     </div>
 </nav>
