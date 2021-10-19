@@ -1,12 +1,17 @@
 <!-- page: savequestion.jsp -->
 <!DOCTYPE html>
+<%@page import="com.capgemini.nps.entity.Account"%>
 <%@page import="com.capgemini.nps.entity.Question"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <%
- 	Question question = (Question)request.getAttribute("question");
+ 	Account account = null;
+	if(null != request.getAttribute("account")){
+		account = new Account();
+		account=(Account)request.getAttribute("account");
+	}
  %>
 <head>
 <!-- Required meta tags -->
@@ -147,8 +152,13 @@ input[type=text]:focus {
 	</nav>
 	<!-- End Nav Bar-->
 	<form>
+		<% if(null != account){ %>
+		<br /> <label>&nbsp User registered Succefully...</label> <br /> <a
+			href="/home">&nbsp Click Here </a> to return to the login page
+		<% } else { %>
 		<br /> <label>&nbsp Question Deleted Succefully...</label> <br /> <a
 			href="/questionpage">&nbsp Click Here </a> to return to the question page
+		<% } %>
 	</form>
 	<!-- Optional JavaScript; choose one of the two! -->
 

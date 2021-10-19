@@ -33,6 +33,11 @@ public class AccountServiceImpl implements AccountService {
 		return accountRepository.findAllByUsername(userName);
 	}
 
+	@Override
+	public void registerUser(Account account) {
+		accountRepository.save(account);
+	}
+
 	/*
 	 * @Override
 	 * 
