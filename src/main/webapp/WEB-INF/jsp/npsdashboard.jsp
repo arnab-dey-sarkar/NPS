@@ -238,7 +238,7 @@ $(document).ready(function() {
     
     // the value axis
     var yAxis = {
-       min: 0,
+       min: -100,
        max: 100,
 
        /* minorTickInterval: 'auto', */
@@ -262,18 +262,23 @@ $(document).ready(function() {
        },
        plotBands: [
           {
-             from: 90,
-             to: 100,
-             color: '#55BF3B' // green
+             from: 40,
+             to: 80,
+             color: '#55BF3B' // green 
           }, 
           {
-             from: 70,
-             to: 90,
+              from: 80,
+              to: 100,
+              color: '#034B03' // deep green 
+           },
+          {
+             from: 0,
+             to: 40,
              color: '#DDDF0D' // yellow
           }, 
           {
-             from: 0,
-             to: 70,
+             from: -100,
+             to: 0,
              color: '#DF5353' // red
           }
        ]
@@ -309,8 +314,68 @@ $(document).ready(function() {
     };
     $('#container').highcharts(json,chartFunction);
  });
+ 
+$(document).ready(function() {
+	var nps = $('#nScore').text() ;
+    var title = {
+       text: '% NPS Trend'   
+    };
+    var subtitle = {
+       text: 'Time trend of the NPS Score'
+    };
+    var xAxis = {
+       categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    };
+    var yAxis = {
+       title: {
+          text: 'NPS Score Range (%)'
+       },
+       plotLines: [{
+          value: 0,
+          width: 1,
+          color: '#808080'
+       }]
+    };   
+    var tooltip = {
+       valueSuffix: '%'
+    }
+    var legend = {
+       layout: 'vertical',
+       align: 'right',
+       verticalAlign: 'middle',
+       borderWidth: 0
+    };
+    var series =  [{
+          name: 'NPS Score (%)',
+          data: [70, 69, 95, 45, 18, 21, 25,
+             65, 23, Math.round(nps),null,null]
+       }, 
+       /* {
+          name: 'New York',
+          data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8,
+             24.1, 20.1, 14.1, 8.6, 2.5]
+       }, 
+       {
+          name: 'London',
+          data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 
+             16.6, 14.2, 10.3, 6.6, 4.8]
+       } */
+    ];
+
+    var json = {};
+    json.title = title;
+    json.subtitle = subtitle;
+    json.xAxis = xAxis;
+    json.yAxis = yAxis;
+    json.tooltip = tooltip;
+    json.legend = legend;
+    json.series = series;
+    
+    $('#lineChart').highcharts(json);
+ });
 function onLoad(){
-	
+		
     if ('<c:out value="${pageContext.request.userPrincipal.name}"/>' == '')
     {
     	window.location.href="home";
@@ -373,7 +438,9 @@ function onLoad(){
     </tr>
     </table>
     
+   
     <div id = "container" style = "float: left;width: 550px; height: 400px; margin: 0 auto"></div>
+    <div id = "lineChart" style = "float: left;width: 550px; height: 400px; margin: 0 auto"></div> 
     <table id="questions">
 	 
 	  <tr>
@@ -388,9 +455,9 @@ function onLoad(){
 	  <td>${npsScore.promoter_pcnt}%</br>${npsScore.promoter_count}</td>
 	  <td id = "nScore">${npsScore.nps_score}</td>
 	  </tr>
-	  
-	  
+
 	  </table>
+	  
   </div>
 
     
