@@ -18,6 +18,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,13 +35,13 @@ public class AnswerController {
 	public AnswerController(AnswerService answerService) {
 		this.answerService = answerService;
 	}
-	
+
 	@Autowired
 	SurveyRepository surveyRepository;
-	
+
 	@ResponseBody
-	 @RequestMapping(value = { "/answer" }, method = RequestMethod.GET)
-	 @Transactional(propagation = Propagation.NEVER)
+	@RequestMapping(value = { "/answer" }, method = RequestMethod.GET)
+	@Transactional(propagation = Propagation.NEVER)
 	public List<Answer> findAllAnswers() {
 		return answerService.getAnswers();
 	}
@@ -50,29 +53,62 @@ public class AnswerController {
 	 */
 
 	@RequestMapping(value = { "/addAnswer" }, method = RequestMethod.POST)
-    @Transactional(propagation = Propagation.NEVER)
-	public String saveAnswer(Model model,@ModelAttribute("answer") @Validated Answer answer, //
-            BindingResult result, //
-            final RedirectAttributes redirectAttributes,HttpSession session, HttpServletRequest request) {
-		
-		String message ="";
+	@Transactional(propagation = Propagation.NEVER)
+	public String saveAnswer(Model model, @ModelAttribute("answer") @Validated Answer answer, //
+			BindingResult result, //
+			final RedirectAttributes redirectAttributes, HttpSession session, HttpServletRequest request) {
+
+		String message = "";
 		try {
-		Answer ans = answerService.saveAnswer(answer);	
-	
-		message ="Feedback noted successfully";
+			
+			List<String> scores = new ArrayList<String>();
+			Enumeration<String> enumeration = request.getParameterNames();
+			while (enumeration.hasMoreElements()) {
+			    String parameterName = (String) enumeration.nextElement();
+			    if(parameterName.startsWith("Score")) {
+			    	scores.add(request.getParameter(parameterName));
+			    }
+			}
+			List<String> feedbacks = new ArrayList<String>();
+			Enumeration<String> enumeration1 = request.getParameterNames();
+			while (enumeration1.hasMoreElements()) {
+			    String parameterName = (String) enumeration1.nextElement();
+			    if(parameterName.startsWith("feedbackInput")) {
+			    	feedbacks.add(request.getParameter(parameterName));
+			    }
+			}
+			
+			//for (Answer answer : answerList) {
+			System.out.println(scores);
+			System.out.println(feedbacks);
+			List<String>topicList=Arrays.asList(answer.getTopic().split((",")));
+			int i=0;
+			for(String topic:topicList)
+			{
+				Answer answer1=new Answer();
+				answer1.setTname(answer.getTname().split(",")[0]);
+				answer1.setTopic(topic);
+				answer1.setScore(Integer.parseInt(scores.get(i)));
+				answer1.setFeedback(feedbacks.get(i));
+				answer1.setId(answer.getId());
+				Answer ans = answerService.saveAnswer(answer1);
+				i++;
+			}
+			//}
+				message = "Feedback noted successfully";
+			
+		} catch (Exception e) {
+			message = "Feedback registration failed" + e;
 
 		}
-		catch(Exception e) {
-		message ="Feedback registration failed"+e;	
-			
-		}
 		model.addAttribute("message", message);
-		
+
 		String teamId = session.getAttribute("teamId").toString();
-		System.out.println("Team Id====="+teamId);
-		
+		System.out.println("Team Id=====" + teamId);
+
 		List<Survey> findAllQuestions = surveyRepository.findAllQuestions(teamId);
-		model.addAttribute("questions",findAllQuestions);
+		model.addAttribute("questions", findAllQuestions);
+
 		return "feedback";
 	}
 }

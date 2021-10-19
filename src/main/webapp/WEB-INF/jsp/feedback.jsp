@@ -239,10 +239,9 @@
     </tr>
     </table>
     </br>
-<!-- <input type="hidden" id="Counter" name="Counter" value="0"> -->
-
-<c:forEach items="${questions}" var="question" varStatus="counter"> 
 <form:form method="POST" modelAttribute="answer" action="/addAnswer" name="answer" enctype="multipart/form-data">
+<c:forEach items="${questions}" var="question" varStatus="counter"> 
+
   <table id="questions">
   <form:hidden path = "tname" value = "${tname}" />
    <tr>
@@ -255,44 +254,46 @@
 	  <tr>
 	  <td>Provide your ratings: </td>
 	  <td><label class="detractorsbutton">
-		      <form:radiobutton path= "score" value ="1"/> 1
+		      <input type="radio" id= "score" name ="Score${counter.index}" value ="1"/> 1
 		    </label>
 		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="2"/> 2
+		      <input type="radio" id= "score" name ="Score${counter.index}" value="2"/> 2
 		    </label>
 		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="3"/> 3
+		      <input type="radio" id= "score" name ="Score${counter.index}" value="3"/> 3
 		    </label>
 		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="4"/> 4
+		      <input type="radio" id= "score" name ="Score${counter.index}" value="4"/> 4
 		    </label>
 		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="5"/> 5
+		      <input type="radio" id= "score" name ="Score${counter.index}" value="5"/> 5
 		    </label>
 		    <label class="detractorsbutton">
-		      <form:radiobutton path= "score" value="6"/> 6
+		      <input type="radio" id= "score" name ="Score${counter.index}" value="6"/> 6
 		    </label>
 		    <label class="passivebutton">
-		      <form:radiobutton path= "score" value="7"/> 7
+		      <input type="radio" id= "score" name ="Score${counter.index}" value="7"/> 7
 		    </label>
 		    <label class="passivebutton">
-		      <form:radiobutton path= "score" value="8"/> 8
+		      <input type="radio" id= "score" name ="Score${counter.index}" value="8"/> 8
 		    </label>
 		    <label class="promotersbutton">
-		      <form:radiobutton path= "score" value="9"/> 9
+		      <input type="radio" id= "score" name ="Score${counter.index}" value="9"/> 9
 		    </label>
 		    <label class="promotersbutton">
-		      <form:radiobutton path= "score" value="10"/> 10
+		      <input type="radio" id= "score" name ="Score${counter.index}" value="10"/> 10
 		    </label></td>
 	  </tr>
 	</table>
 
-   <label>We are glad to hear some feed back from you :</label><form:input type="text" class="form-control" id="feedback" path = "feedback"
+   <label>We are glad to hear some feed back from you :</label><input type="text" class="form-control"  name="feedbackInput${counter.index}" path = "feedback"
                                                  aria-describedby="feedback"/> 
     
-  <button type="submit" name = "Continue" class="btn btn-primary">Continue</button>
-</form:form> 
+ 
+
 </c:forEach>
+ <button type="submit" name = "Continue" class="btn btn-primary">Continue</button>
+</form:form> 
 </div> 
    
  <%-- <div class="form-group">
