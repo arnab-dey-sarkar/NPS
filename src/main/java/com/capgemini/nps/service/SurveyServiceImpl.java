@@ -28,14 +28,18 @@ public class SurveyServiceImpl implements SurveyService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public Survey saveSurvey(Survey survey) {
+	public void saveSurvey(Survey survey) {
 		/*
 		 * if (survey.getNpmScore() != 0) { throw new
 		 * RuntimeException("You can't set NPS!"); } else if
 		 * (isSurveyAlreadyExist(survey.getTopic())) { throw new
 		 * RuntimeException("This survey already exists!"); }
 		 */
-		return surveyRepository.save(survey);
+		int count = surveyRepository.answerExistsByTnameOrTopic(survey.getId(),survey.getTeamId());
+		if (count == 0)
+			surveyRepository.save(survey);
+		else
+			surveyRepository.updateAnswer(survey.getId(),survey.getTopic(),survey.getTeamId());
 	}
 
 	@Override

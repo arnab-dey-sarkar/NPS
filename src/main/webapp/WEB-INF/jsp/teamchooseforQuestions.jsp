@@ -230,7 +230,7 @@
          ${message}
      </div>
    </c:if>
-<form:form method="GET" modelAttribute="team" action="/npsScoreCalculate" name="answer" enctype="multipart/form-data">
+<form:form method="GET" modelAttribute="team" action="/getTeamName" name="team" enctype="multipart/form-data">
   
  <div class="form-group">
     

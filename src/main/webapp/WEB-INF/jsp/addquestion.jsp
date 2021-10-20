@@ -134,7 +134,7 @@
                     Team</a>
             </li>
             <li class="nav-item">
-                <a href="/questionpage" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Add Questions</a>
+                <a href="/teamChooseQues" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Add Questions</a>
             </li>
             <li class="nav-item">
                 <a href="/feedBack" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Feedback

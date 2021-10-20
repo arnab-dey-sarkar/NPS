@@ -9,10 +9,17 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.capgemini.nps.entity.Answer;
 import com.capgemini.nps.entity.Question;
 import com.capgemini.nps.entity.Survey;
 import com.capgemini.nps.service.QuestionService;
@@ -39,6 +46,23 @@ public class QuestionController {
         return "savequestion";
     }
 	
+	@RequestMapping(value = { "/getTeamName" }, method = RequestMethod.GET)
+	 @Transactional(propagation = Propagation.NEVER)
+	public String getTeamName(Model model,@RequestParam(value = "teamId", defaultValue = "") String teamId,HttpServletRequest request, HttpServletResponse response) {
+		/*
+		 * List<Survey> findAllQuestions = surveyService.findAllQuestions(teamId);
+		 * model.addAttribute("questions",findAllQuestions);
+		 * model.addAttribute("answer",new Answer());
+		 * model.addAttribute("tname",teamId);
+		 */
+		List<Question> questionList = questionService.fetchAllQuestions();
+		//System.out.println(questionList);
+		request.setAttribute("questionList", questionList);
+		HttpSession session = request.getSession();
+		session.setAttribute("teamId", teamId);
+		return "addquestion";
+	}
+	
 	@PostMapping("/savequestion")
 	public String saveQuestion(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
 		String reqQuestion = request.getParameter("newquestion");
@@ -55,6 +79,7 @@ public class QuestionController {
 			Survey survey = new Survey();
 			survey.setTeamId(teamId);
 			survey.setTopic(question.getDescription());
+			survey.setId(question.getId());
 			surveyService.saveSurvey(survey);
 			
 		}
@@ -77,4 +102,10 @@ public class QuestionController {
 		request.setAttribute("questionList", questionList);*/
         return "deletequestionconfirmation";
 	}
+	
+	 @GetMapping("/teamChooseQues")
+	    public String getNPSPage(Model model) {
+		   model.addAttribute("team",new Survey());
+	        return "teamchooseforQuestions";
+	    }
 }

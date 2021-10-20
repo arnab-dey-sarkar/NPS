@@ -10,7 +10,7 @@ public interface SurveyService {
 
 	Boolean isSurveyAlreadyExist(String topic);
 
-	Survey saveSurvey(Survey survey);
+	void saveSurvey(Survey survey);
 
 	List<Survey> getSurveys();
 

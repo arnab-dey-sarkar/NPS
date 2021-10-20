@@ -134,7 +134,7 @@ input[type=text]:focus {
 					class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Register
 						Team
 				</a></li>
-				<li class="nav-item"><a href="/questionpage"
+				<li class="nav-item"><a href="/teamChooseQues"
 					class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Add
 						Questions
 				</a></li>
