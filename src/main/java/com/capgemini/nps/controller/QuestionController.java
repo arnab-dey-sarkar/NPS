@@ -35,8 +35,9 @@ public class QuestionController {
 	SurveyService surveyService;
 
 	@GetMapping("/questionpage")
-    public String getQuestionPage(HttpServletRequest request, HttpServletResponse response) {
-		List<Question> questionList = questionService.fetchAllQuestions();
+    public String getQuestionPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		String teamId = session.getAttribute("teamId").toString();
+		List<Question> questionList = questionService.fetchAllQuestions(teamId);
 		//System.out.println(questionList);
 		request.setAttribute("questionList", questionList);
         return "addquestion";
@@ -55,7 +56,7 @@ public class QuestionController {
 		 * model.addAttribute("answer",new Answer());
 		 * model.addAttribute("tname",teamId);
 		 */
-		List<Question> questionList = questionService.fetchAllQuestions();
+		List<Question> questionList = questionService.fetchAllQuestions(teamId);
 		//System.out.println(questionList);
 		request.setAttribute("questionList", questionList);
 		HttpSession session = request.getSession();
@@ -67,6 +68,7 @@ public class QuestionController {
 	public String saveQuestion(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
 		String reqQuestion = request.getParameter("newquestion");
 		String reqQuestionId = request.getParameter("questionid");
+		String teamId = session.getAttribute("teamId").toString();
 		if(null!=reqQuestion && !reqQuestion.isEmpty()) {
 			Question question = new Question();
 			question.setDescription(reqQuestion);
@@ -74,7 +76,6 @@ public class QuestionController {
 				question.setId(Long.valueOf(reqQuestionId));
 			}
 			questionService.addQuestion(question);
-			String teamId = session.getAttribute("teamId").toString();
 			System.out.println("Team Id in savequestion====="+teamId);
 			Survey survey = new Survey();
 			survey.setTeamId(teamId);
@@ -83,7 +84,7 @@ public class QuestionController {
 			surveyService.saveSurvey(survey);
 			
 		}
-		List<Question> questionList = questionService.fetchAllQuestions();
+		List<Question> questionList = questionService.fetchAllQuestions(teamId);
 		//System.out.println(questionList);
 		request.setAttribute("questionList", questionList);
 		return "addquestion";

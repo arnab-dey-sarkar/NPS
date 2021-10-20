@@ -4,6 +4,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+ <% 
+	String teamName = (String)session.getAttribute("teamId");
+ %>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -235,7 +238,8 @@
  <table id ="title">
     <tr>
     <th><h5>Thanks for your feedback!</h5>
-	  <h6>Just some Questions for you</h6></th>
+	  <h6>Just some Questions for you</h6>
+	  <h6>Team chosen: <%= teamName %></h6></th>
     </tr>
     </table>
     </br>

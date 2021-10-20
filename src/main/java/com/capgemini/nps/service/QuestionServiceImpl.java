@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.nps.entity.Question;
+import com.capgemini.nps.entity.Survey;
 import com.capgemini.nps.repository.QuestionRepository;
 import com.capgemini.nps.repository.SurveyRepository;
 
@@ -24,9 +25,18 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public List<Question> fetchAllQuestions() {
+	public List<Question> fetchAllQuestions(String teamId) {
 		List<Question> questionList = new ArrayList<>();
-		questionRepo.findAll().forEach(question -> questionList.add(question));
+		List<Survey> surveyList = surveyRepo.findAll();
+		for(Survey survey: surveyList) {
+			if(teamId.equalsIgnoreCase(survey.getTeamId())) {
+				Question question = new Question();
+				question.setId(survey.getId());
+				question.setDescription(survey.getTopic());
+				questionList.add(question);
+			}
+		}
+		//questionRepo.findAll().forEach(question -> questionList.add(question));
 		return questionList;
 	}
 

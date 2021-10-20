@@ -7,7 +7,7 @@ import com.capgemini.nps.entity.Question;
 
 public interface QuestionService {
 	public void addQuestion(Question question);
-	public List<Question> fetchAllQuestions();
+	public List<Question> fetchAllQuestions(String teamId);
 	public Optional<Question> fetchQuestionById(Long id);
 	public void deleteQuestion(Long id);
 }

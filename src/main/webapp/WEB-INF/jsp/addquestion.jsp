@@ -8,6 +8,7 @@
  <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <% 
 	List<Question> questionList = (List<Question>)request.getAttribute("questionList"); 
+	String teamName = (String)session.getAttribute("teamId");
 %>
 <head>
     <!-- Required meta tags -->
@@ -155,6 +156,8 @@
 <!-- End Nav Bar-->
 <form>
     <div class="form-group">
+    &nbsp Team chosen: <b><%= teamName %></b> <br/>
+    &nbsp <a href="/teamChooseQues">Click here</a> to choose a different team...<br/>
     <label>&nbsp Previously added questions </label>
 	<table id="questions" >
 	  <tr>
