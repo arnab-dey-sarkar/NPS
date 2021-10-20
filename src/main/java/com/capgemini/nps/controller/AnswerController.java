@@ -91,7 +91,7 @@ public class AnswerController {
 				answer1.setScore(Integer.parseInt(scores.get(i)));
 				answer1.setFeedback(feedbacks.get(i));
 				answer1.setId(answer.getId());
-				Answer ans = answerService.saveAnswer(answer1);
+				answerService.saveAnswer(answer1);
 				i++;
 			}
 			//}

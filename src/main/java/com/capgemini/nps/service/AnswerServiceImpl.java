@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 @Service
 public class AnswerServiceImpl implements AnswerService {
@@ -25,7 +26,7 @@ public class AnswerServiceImpl implements AnswerService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public Answer saveAnswer(Answer answer) {
+	public void saveAnswer(Answer answer) {
 		/*
 		 * Survey survey = answer.getSurvey(); if (survey == null || survey.getId() ==
 		 * null || survey.getId() == 0) { throw new
@@ -43,14 +44,18 @@ public class AnswerServiceImpl implements AnswerService {
 		 * * ((float) (promoterCount - detractorCount) / answerCount));
 		 * survey.setNpmScore(npmScore); surveyRepository.save(survey); }
 		 */
-		
-		Survey survey = surveyRepository.findByTopic(answer.getTopic());
-		//survey.setStatus("Completed");
-		surveyRepository.save(survey);
-		return answerRepository.save(answer);
+
+		// Survey survey = surveyRepository.findByTopic(answer.getTopic());
+		// survey.setStatus("Completed");
+		// surveyRepository.save(survey);
+		int count = answerRepository.answerExistsByTnameOrTopic(answer.getTname(), answer.getTopic());
+		if (count == 0)
+			answerRepository.save(answer);
+		else
+			answerRepository.updateAnswer(answer.getTname(), answer.getTopic(), answer.getFeedback(),
+					answer.getScore());
 	}
-	
-	
+
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public NPSScore calNPSScore(String teamId) {
@@ -71,39 +76,38 @@ public class AnswerServiceImpl implements AnswerService {
 		 * * ((float) (promoterCount - detractorCount) / answerCount));
 		 * survey.setNpmScore(npmScore); surveyRepository.save(survey); }
 		 */
-		
+
 		List<Answer> answers = answerRepository.findAllByTeamId(teamId);
-		 int answerCount = answers.size(); 
-		 if (answerCount != 0)
-		  { 
-			 int promoterCount = 0; int detractorCount = 0; int passiveCount=0; 
-		  for (Answer anAnswer : answers) 
-		  { 
-			  if (anAnswer.getScore() >= 9)  {
-				  promoterCount++;
-				  } 
-			  
-			  else if (anAnswer.getScore() <= 6)  { 
-				  detractorCount++; 
-			  } 
-			  else if (anAnswer.getScore() > 6 && anAnswer.getScore() < 9)  { 
-				  passiveCount++; 
-			  } 
-		  }
-		  int npmScore = (int) (100 * ((float) (promoterCount - detractorCount) / answerCount));
-		  NPSScore npsScore = new NPSScore();
-		  npsScore.setNps_score(npmScore);
-		  npsScore.setDetractor_count(detractorCount);
-		  npsScore.setPromoter_count(promoterCount);
-		  npsScore.setPassive_count(passiveCount);
-		  
-		  npsScore.setPromoter_pcnt((int) (100 * ((float) (promoterCount) / answerCount)));
-		  npsScore.setPassive_pcnt((int) (100 * ((float) (passiveCount) / answerCount)));
-		  npsScore.setDetractor_pcnt((int)(100 * ((float) (detractorCount) / answerCount)));
-		  return npsScore;
-		  } 
-		  
-		 return null;
+		int answerCount = answers.size();
+		if (answerCount != 0) {
+			int promoterCount = 0;
+			int detractorCount = 0;
+			int passiveCount = 0;
+			for (Answer anAnswer : answers) {
+				if (anAnswer.getScore() >= 9) {
+					promoterCount++;
+				}
+
+				else if (anAnswer.getScore() <= 6) {
+					detractorCount++;
+				} else if (anAnswer.getScore() > 6 && anAnswer.getScore() < 9) {
+					passiveCount++;
+				}
+			}
+			int npmScore = (int) (100 * ((float) (promoterCount - detractorCount) / answerCount));
+			NPSScore npsScore = new NPSScore();
+			npsScore.setNps_score(npmScore);
+			npsScore.setDetractor_count(detractorCount);
+			npsScore.setPromoter_count(promoterCount);
+			npsScore.setPassive_count(passiveCount);
+
+			npsScore.setPromoter_pcnt((int) (100 * ((float) (promoterCount) / answerCount)));
+			npsScore.setPassive_pcnt((int) (100 * ((float) (passiveCount) / answerCount)));
+			npsScore.setDetractor_pcnt((int) (100 * ((float) (detractorCount) / answerCount)));
+			return npsScore;
+		}
+
+		return null;
 	}
 
 	/*
