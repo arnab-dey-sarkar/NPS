@@ -9,11 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.nps.entity.Question;
 import com.capgemini.nps.repository.QuestionRepository;
+import com.capgemini.nps.repository.SurveyRepository;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
 	@Autowired
 	QuestionRepository questionRepo;
+	@Autowired
+	SurveyRepository surveyRepo;
 
 	@Override
 	public void addQuestion(Question question) {
@@ -36,6 +39,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public void deleteQuestion(Long id) {
 		questionRepo.deleteById(id);
+		surveyRepo.deleteById(id);
 	}
 
 }
