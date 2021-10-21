@@ -11,6 +11,7 @@
 	if(null != request.getAttribute("account")){
 		account = new Account();
 		account=(Account)request.getAttribute("account");
+		
 	}
  %>
 <head>
@@ -29,7 +30,7 @@
 <style>
 body {
 	background-image:
-		url("https://download.logo.wine/logo/Capgemini/Capgemini-Logo.wine.png");
+		url("https://image.shutterstock.com/image-vector/numbers-background-seamless-pattern-vector-260nw-533619547.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -113,8 +114,22 @@ input[type=text]:focus {
 	border: 3px solid #555;
 }
 </style>
+<script>
+function onLoad(){
+	
+    if ('<c:out value="${pageContext.request.userPrincipal.name}"/>' == '')
+    {
+    	window.location.href="home";
+    }
+    else
+    {
+    	document.getElementById("homeLink").style.display = "none";
+
+    }
+}
+</script>
 </head>
-<body>
+<body onload="onLoad()">
 	<!--Nav Bar -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">NPS</a>
@@ -127,7 +142,7 @@ input[type=text]:focus {
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="/home"
+				<li class="nav-item active"><a class="nav-link" id= "homeLink" href="/home"
 					class="btn btn-success">Home <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item"><a href="/registerPage"

@@ -104,6 +104,11 @@
 	    {
 	    	window.location.href="home";
 	    }
+	    else
+	    {
+	    	document.getElementById("homeLink").style.display = "none";
+
+	    }
 	}
  </script>   
 </head>
@@ -119,7 +124,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
              <li class="nav-item active">
-                <a class="nav-link" href="/home" class="btn btn-success">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/home" id="homeLink" class="btn btn-success">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a href="/registerPage" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Register

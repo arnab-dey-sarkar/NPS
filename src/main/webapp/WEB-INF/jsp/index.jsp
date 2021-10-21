@@ -17,13 +17,27 @@
     <style>
     body
     {
-        background-image:url("https://download.logo.wine/logo/Capgemini/Capgemini-Logo.wine.png");
+        background-image:url("https://image.shutterstock.com/image-vector/numbers-background-seamless-pattern-vector-260nw-533619547.jpg");
         background-repeat: no-repeat;
         background-size: cover;
     }
     </style>
 </head>
-<body>
+<script>
+function onLoad(){
+	
+    if ('<c:out value="${pageContext.request.userPrincipal.name}"/>' == '')
+    {
+    	window.location.href="home";
+    }
+    else
+    {
+    	document.getElementById("homeLink").style.display = "none";
+
+    }
+}
+</script>
+<body onload="onLoad()">
 <!--Nav Bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">NPS</a>
@@ -35,7 +49,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/home" class="btn btn-success">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/home" id ="homeLink" class="btn btn-success">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a href="/registerPage" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Register
@@ -54,7 +68,7 @@
             </li>
 
         </ul>
-        <p style="font-weight: bold;">Welcome ${pageContext.request.userPrincipal.name} !!</p>
+        <p style="font-weight: bold;">Welcome ${pageContext.request.userPrincipal.name} !!</p>&nbsp;&nbsp;
         <form class="form-inline my-2 my-lg-0">
             <a href="/signout?user=${pageContext.request.userPrincipal.name}" class="btn btn-outline-success my-2 my-sm-0" type="submit">LogOut</a>
         </form>

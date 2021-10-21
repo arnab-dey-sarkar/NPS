@@ -17,7 +17,7 @@
     <style>
     body
     {
-        background-image:url("https://download.logo.wine/logo/Capgemini/Capgemini-Logo.wine.png");
+        background-image:url("https://image.shutterstock.com/image-vector/random-transparent-numbers-0-9-260nw-1450374653.jpg");
         background-repeat: no-repeat;
         background-size: cover;
     }

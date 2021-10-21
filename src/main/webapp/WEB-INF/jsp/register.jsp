@@ -10,16 +10,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<script src="${pageContext.request.contextPath}/core/jquery.1.10.2.min.js"></script> 
+ 
+
+    <script src="${pageContext.request.contextPath}/core/jquery.1.10.2.min.js"></script> 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+ 
 
     <title>Net Promoter Score</title>
     <style>
     body
     {
-        background-image:url("https://download.logo.wine/logo/Capgemini/Capgemini-Logo.wine.png");
+        background-image:url("https://previews.123rf.com/images/doodkoalex/doodkoalex0909/doodkoalex090900033/5592860-abstract-vector-mathematical-background-with-random-numbers.jpg");
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -28,6 +32,9 @@
     color: #FFCC5F;
     font-style: italic;
     font-weight: bold;
+    }
+    form{
+    margin-left: 50px;
     }
     </style>
     <script>
@@ -39,9 +46,13 @@
     var $remove = $('#removeButton');
     var $focused;
 
+ 
+
     $container.on('click', 'input', function () {
         $focused = $(this);
     });
+
+ 
 
     $add.on('click', function () {
         var $newRow = $row.clone().insertAfter('.row:last');
@@ -50,6 +61,8 @@
         });
     });
 
+ 
+
     $remove.on('click', function () {
         if (!$focused) {
             alert('Select a row to delete (click en input with it)');
@@ -57,23 +70,28 @@
         }
         
         var $currentRow = $focused.closest('.row');
-    	if ($currentRow.index() === 0) {
+        if ($currentRow.index() === 0) {
             // don't remove first row
             alert("You can't remove first row");
         } else {
-        	$currentRow.remove();
+            $currentRow.remove();
             $focused=null;
         }
     });
   });
   
   function onLoad(){
-		
-	    if ('<c:out value="${pageContext.request.userPrincipal.name}"/>' == '')
-	    {
-	    	window.location.href="home";
-	    }
-	}
+        
+        if ('<c:out value="${pageContext.request.userPrincipal.name}"/>' == '')
+        {
+            window.location.href="home";
+        }
+        else
+        {
+        	document.getElementById("homeLink").style.display = "none";
+
+        }
+    }
     </script>
 </head>
 <body onLoad="onLoad()">
@@ -85,10 +103,12 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
+ 
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/home" class="btn btn-success">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" id="homeLink" href="/home" class="btn btn-success">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a href="/registerPage" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Register
@@ -106,8 +126,10 @@
                     Form</a>
             </li>
 
+ 
+
         </ul>
-        <p style="font-weight: bold;">Welcome ${pageContext.request.userPrincipal.name} !!</p>
+        <p style="font-weight: bold;">Welcome ${pageContext.request.userPrincipal.name} !!</p>&nbsp;&nbsp;
         <form class="form-inline my-2 my-lg-0">
             <a href="/signout?user=${pageContext.request.userPrincipal.name}" class="btn btn-outline-success my-2 my-sm-0" type="submit">LogOut</a>
         </form>
@@ -124,16 +146,19 @@
     <table id ="title">
         
         <tr>
-        <td>Team Name</td>
+        <td><b>Team Name</b></td>
         <td><form:input type="text" class="form-control" path="tname" aria-describedby="teamName"/></td>
         </tr>
+        </br>
+        <td>&nbsp;</td><td>&nbsp;</td>
         <tr>
-         <td>Team Manager's Name</td>
+         <td><b>Team Manager's Name</b></td>
         <td><form:input type="text" class="form-control" path="tmanagername"
                                                  aria-describedby="teamManagerName"/></td>
         </tr>
+        <td>&nbsp;</td><td>&nbsp;</td>
          <tr>
-         <td>Project ID</td>
+         <td><b>Project ID</b></td>
         <td><form:select path="tprojectid">
             <form:option value="none" label="Select an Option"/>
             <form:option value="119056879" label="119056879" />
@@ -144,10 +169,12 @@
         </tr>
       
 
+ 
+
     <!-- <div id="addLine" class="form-group">
         <button onclick="addInputLine()" name="addInputLine" class="btn btn-primary">Add Member<span class="fa fa-plus"/></button>
     </div> -->
-    
+    <td>&nbsp;</td><td>&nbsp;</td>
    <tr>
    <td>
    <div class="text-right">
@@ -156,23 +183,23 @@
    </div>
    </td>
    <td>
-	<div class="container">
-		    <div class="row">
-		        <div class="col-lg-3" style="padding-left: 0px;padding-right: 0px;">
-		            <div class="form-group">
-		                <form:input type="text" size="70" class="form-control" path="tmembername" name="size[]" placeholder="Member Name" />
-		            </div>
-		        </div>
-		        <!-- <div class="col-lg-3">
-		            <div class="form-group">
-		                <input type="text" class="form-control" name="clr[]" placeholder="Color" />
-		            </div>
-		        </div> -->
-		        <hr/>
-		    </div>
-	</div>
-	</td>
-	</tr>
+    <div class="container">
+            <div class="row">
+                <div class="col-lg-3" style="padding-left: 0px;padding-right: 0px;">
+                    <div class="form-group">
+                        <form:input type="text" size="70" class="form-control" path="tmembername" name="size[]" placeholder="Member Name" />
+                    </div>
+                </div>
+                <!-- <div class="col-lg-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="clr[]" placeholder="Color" />
+                    </div>
+                </div> -->
+                <hr/>
+            </div>
+    </div>
+    </td>
+    </tr>
 </table>
 </div>
     <script>
@@ -182,11 +209,15 @@
     }
     </script>
 
+ 
 
+ 
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form:form>
 <!-- Optional JavaScript; choose one of the two! -->
+
+ 
 
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -195,6 +226,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
+
+ 
 
 <!-- Option 2: Separate Popper and Bootstrap JS -->
 <!--

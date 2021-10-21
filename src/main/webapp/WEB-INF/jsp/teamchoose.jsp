@@ -25,7 +25,7 @@
     <style>
     body
     {
-        background-image:url("https://download.logo.wine/logo/Capgemini/Capgemini-Logo.wine.png");
+        background-image:url("https://previews.123rf.com/images/lisala/lisala1607/lisala160700103/60142048-abstract-background-with-transparent-group-of-numbers.jpg");
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -182,6 +182,11 @@
         {
         	window.location.href="home";
         }
+        else
+	    {
+	    	document.getElementById("homeLink").style.display = "none";
+
+	    }
     }
     </script>
 </head>
@@ -199,7 +204,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
              <li class="nav-item active">
-                <a class="nav-link" href="/home" class="btn btn-success">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/home" id="homeLink" class="btn btn-success">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a href="/registerPage" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Register
@@ -218,7 +223,7 @@
             </li>
 
         </ul>
-        <p style="font-weight: bold;">Welcome ${pageContext.request.userPrincipal.name} !!</p>
+        <p style="font-weight: bold;">Welcome ${pageContext.request.userPrincipal.name} !!</p>&nbsp;&nbsp;
         <form class="form-inline my-2 my-lg-0">
             <a href="/signout?user=${pageContext.request.userPrincipal.name}" class="btn btn-outline-success my-2 my-sm-0" type="submit">LogOut</a>
         </form>
