@@ -115,7 +115,7 @@ input[type=text]:focus {
 }
 </style>
 <script>
-function onLoad(){
+/* function onLoad(){
 	
     if ('<c:out value="${pageContext.request.userPrincipal.name}"/>' == '')
     {
@@ -126,10 +126,11 @@ function onLoad(){
     	document.getElementById("homeLink").style.display = "none";
 
     }
-}
+} */
 </script>
 </head>
-<body onload="onLoad()">
+<!-- <body onload="onLoad()"> -->
+<body>
 	<!--Nav Bar -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">NPS</a>
