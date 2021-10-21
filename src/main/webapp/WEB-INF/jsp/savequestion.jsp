@@ -21,7 +21,7 @@
     <style>
     body
     {
-        background-image:url("https://download.logo.wine/logo/Capgemini/Capgemini-Logo.wine.png");
+        background-image:url("https://ak.picdn.net/shutterstock/videos/2952826/thumb/1.jpg");
         background-repeat: no-repeat;
         background-size: cover;
     }

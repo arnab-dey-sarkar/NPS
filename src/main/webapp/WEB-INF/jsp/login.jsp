@@ -63,7 +63,7 @@ width:60%;
 
 
 
-<ul class="navbar-nav ml">
+<ul class="navbar-nav mx-auto">
 <a class="navbar-brand" href="#">NPS</a>
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,6 +92,7 @@ Form</a>
 </ul>
 </nav>
 </br>
+<center>		
 <table id ="title">
 <tr>
 <th><h6>Login (For Client Users)</h6>
