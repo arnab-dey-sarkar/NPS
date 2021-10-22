@@ -27,7 +27,7 @@
     <style>
     body
     {
-        background-image:url("https://previews.123rf.com/images/orfeev/orfeev1401/orfeev140100027/26380349-numbers-seamless-background.jpg");
+        background-image:url("https://st2.depositphotos.com/5531122/11668/i/950/depositphotos_116683516-stock-photo-graph-of-stock-market-data.jpg");
         background-repeat: no-repeat;
         background-size: cover;
     }
