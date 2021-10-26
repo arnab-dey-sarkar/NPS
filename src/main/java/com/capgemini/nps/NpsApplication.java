@@ -2,6 +2,8 @@ package com.capgemini.nps;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -10,6 +12,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @SpringBootApplication
 @EnableWebMvc
+@ComponentScan(basePackages="com.capgemini.nps")
+@EnableJpaRepositories("com.capgemini.nps.repository")
 public class NpsApplication extends WebMvcConfigurerAdapter {
 
 	public static void main(String[] args) {
